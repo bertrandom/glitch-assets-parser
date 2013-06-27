@@ -5,6 +5,7 @@ import re
 import os, os.path
 import json
 import argparse
+from PIL import Image
 
 parser = argparse.ArgumentParser(description='Parses Glitch assets (food and drink) metadata into a JSON format')
 parser.add_argument('-f', '--filename', type=argparse.FileType('w'), help='file to output to')
@@ -54,6 +55,10 @@ for category in categories:
 		    for filename in filenames:
 		    	if "iconic" in filename:
 		    		item['asset_path'] = 'glitch-assets/' + directory_name + '/' + filename
+
+		im = Image.open(item['asset_path'])
+		item['width'] = im.size[0]
+		item['height'] = im.size[1]
 
 		items[item_id] = item
 
